@@ -1,6 +1,13 @@
 package com.luv2code.junitdemo;
 
-import org.junit.jupiter.api.*;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.Test;
+
+import java.util.Arrays;
+import java.util.LinkedHashSet;
+import java.util.List;
+import java.util.Set;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -11,6 +18,29 @@ class DemoUtilsTest {
     @BeforeEach
     void setupBeforeEach() {
         demoUtils = new DemoUtils();
+    }
+
+    @DisplayName("Array Equals")
+    @Test
+    void testArrayEquals() {
+        String[] stringArray = {"A", "B", "C"};
+
+        assertArrayEquals(stringArray, demoUtils.getFirstThreeLettersOfAlphabet(), "Arrays should be the same");
+    }
+
+    @DisplayName("Iterable equals")
+    @Test
+    void testIterableEquals() {
+//        List<String> theList = List.of("hieu", "hoang", "nguyen");
+        Set<String> theList = new LinkedHashSet<>(Arrays.asList("hieu", "hoang", "nguyen"));
+        assertIterableEquals(theList, demoUtils.getAcademyInList(), "Expected list should be same as actual list");
+    }
+
+    @DisplayName("Lines match")
+    @Test
+    void testLinesMatch() {
+        List<String> theList = List.of("hieu", "hoang", "nguyen");
+        assertLinesMatch(theList, demoUtils.getAcademyInList(), "Lines should match");
     }
 
     @DisplayName("Same and Not Same")
