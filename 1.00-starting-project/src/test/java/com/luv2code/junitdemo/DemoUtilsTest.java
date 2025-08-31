@@ -1,8 +1,6 @@
 package com.luv2code.junitdemo;
 
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.DisplayName;
-import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.*;
 
 import java.time.Duration;
 import java.util.Arrays;
@@ -13,6 +11,7 @@ import java.util.Set;
 import static org.junit.jupiter.api.Assertions.*;
 
 // @DisplayNameGeneration(DisplayNameGenerator.IndicativeSentences.class)
+@TestMethodOrder(MethodOrderer.OrderAnnotation.class)
 class DemoUtilsTest {
     DemoUtils demoUtils;
 
@@ -82,6 +81,7 @@ class DemoUtilsTest {
 
     @Test
     @DisplayName("Equals and Not Equals")
+    @Order(0)
     void testEqualsAndNotEquals() {
 
         assertEquals(6, demoUtils.add(2, 4), "2+4 must be 6");
@@ -91,6 +91,7 @@ class DemoUtilsTest {
 
     @Test
     @DisplayName("Null and Not Null")
+    @Order(1)
     void testNullAndNotNull() {
 
 //        System.out.println("Running test: testNullAndNotNull");
