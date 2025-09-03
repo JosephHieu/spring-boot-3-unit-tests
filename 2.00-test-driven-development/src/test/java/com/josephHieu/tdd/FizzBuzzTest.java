@@ -1,6 +1,8 @@
 package com.josephHieu.tdd;
 
 import org.junit.jupiter.api.*;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.CsvFileSource;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
@@ -39,11 +41,38 @@ public class FizzBuzzTest {
 
     @DisplayName("Not Divisible by Three or Five")
     @Test
-    @Order(3)
+    @Order(4)
     void testForDivisibleByThreeOrFive() {
 
         String expected = "1";
 
         assertEquals(expected, FizzBuzz.compute(1), "Should return 1");
+    }
+
+    @DisplayName("Testing with Small data file")
+    @ParameterizedTest(name="value={0}, expected={1}")
+    @CsvFileSource(resources="/small-test-data.csv")
+    @Order(5)
+    void testSmallDataFile(int value, String expected) {
+
+        assertEquals(expected, FizzBuzz.compute(value));
+    }
+
+    @DisplayName("Testing with Medium data file")
+    @ParameterizedTest(name="param1={0}, param2={1}")
+    @CsvFileSource(resources="/medium-test-data.csv")
+    @Order(6)
+    void testMediumDataFile(int value, String expected) {
+
+        assertEquals(expected, FizzBuzz.compute(value));
+    }
+
+    @DisplayName("Testing with Large data file")
+    @ParameterizedTest(name="value={0}, expected={1}")
+    @CsvFileSource(resources="/large-test-data.csv")
+    @Order(7)
+    void testLargeDataFile(int value, String expected) {
+
+        assertEquals(expected, FizzBuzz.compute(value));
     }
 }
