@@ -1,5 +1,8 @@
 package com.josephHieu.component.models;
 
+import org.springframework.stereotype.Component;
+
+@Component
 public class CollegeStudent implements Student {
     private String firstname;
     private String lastname;

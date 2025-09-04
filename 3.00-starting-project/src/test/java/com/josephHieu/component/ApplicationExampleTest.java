@@ -3,6 +3,7 @@ package com.josephHieu.component;
 import com.josephHieu.component.models.CollegeStudent;
 import com.josephHieu.component.models.StudentGrades;
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -11,7 +12,10 @@ import org.springframework.boot.test.context.SpringBootTest;
 import java.util.ArrayList;
 import java.util.Arrays;
 
-@SpringBootTest
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotEquals;
+
+@SpringBootTest(classes = MvcTestingExampleApplication.class)
 public class ApplicationExampleTest {
 
     private static int count = 0;
@@ -25,7 +29,7 @@ public class ApplicationExampleTest {
     @Value("${info.app.version}")
     private String appVersion;
 
-    @Value("${info.schoole.name}")
+    @Value("${info.school.name}")
     private String schoolName;
 
     @Autowired
@@ -46,8 +50,20 @@ public class ApplicationExampleTest {
         student.setStudentGrades(studentGrades);
     }
 
+    @DisplayName("Add grade results for student grades")
     @Test
-    void basicTest() {
+    public void addGradeResultsForStudentGrades() {
 
+        assertEquals(353.25, studentGrades.addGradeResultsForSingleClass(
+                student.getStudentGrades().getMathGradeResults()
+        ));
+    }
+
+    @DisplayName("Add grade results for student grades not equal")
+    @Test
+    public void addGradeResultsForStudentGradeAssertNotEquals() {
+        assertNotEquals(0, studentGrades.addGradeResultsForSingleClass(
+                student.getStudentGrades().getMathGradeResults()
+        ));
     }
 }
