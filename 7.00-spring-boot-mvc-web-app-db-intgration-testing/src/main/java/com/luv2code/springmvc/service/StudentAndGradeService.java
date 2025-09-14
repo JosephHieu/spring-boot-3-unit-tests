@@ -120,6 +120,25 @@ public class StudentAndGradeService {
             studentId = grade.get().getStudentId();
             mathGradeDao.deleteById(studentId);
         }
+
+        if (gradeType.equals("science")) {
+            Optional<ScienceGrade> grade = scienceGradesDao.findById(id);
+            if (!grade.isPresent()) {
+                return studentId;
+            }
+            studentId = grade.get().getStudentId();
+            scienceGradesDao.deleteById(id);
+        }
+
+        if (gradeType.equals("history")) {
+            Optional<HistoryGrade> grade = historyGradeDao.findById(id);
+            if (!grade.isPresent()) {
+                return studentId;
+            }
+            studentId = grade.get().getStudentId();
+            historyGradeDao.deleteById(id);
+        }
+
         return studentId;
     }
 }
