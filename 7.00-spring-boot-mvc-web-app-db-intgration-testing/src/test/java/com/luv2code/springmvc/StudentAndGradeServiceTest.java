@@ -1,9 +1,6 @@
 package com.luv2code.springmvc;
 
-import com.luv2code.springmvc.models.CollegeStudent;
-import com.luv2code.springmvc.models.HistoryGrade;
-import com.luv2code.springmvc.models.MathGrade;
-import com.luv2code.springmvc.models.ScienceGrade;
+import com.luv2code.springmvc.models.*;
 import com.luv2code.springmvc.repository.HistoryGradeDao;
 import com.luv2code.springmvc.repository.MathGradesDao;
 import com.luv2code.springmvc.repository.ScienceGradesDao;
@@ -161,7 +158,20 @@ public class StudentAndGradeServiceTest {
         assertEquals(0, studentService.deleteGrade(1, "literature"), "No student should have a literature class");
     }
 
+    @Test
+    public void studentInformation() {
 
+        GradebookCollegeStudent gradebookCollegeStudent = studentService.studentInformation(1);
+
+        assertNotNull(gradebookCollegeStudent);
+        assertEquals(1, gradebookCollegeStudent.getId());
+        assertEquals("Hieu", gradebookCollegeStudent.getFirstname());
+        assertEquals("DepZai", gradebookCollegeStudent.getLastname());
+        assertEquals("oidoioi@gmail.com", gradebookCollegeStudent.getEmailAddress());
+        assertTrue(gradebookCollegeStudent.getStudentGrades().getMathGradeResults().size() == 1);
+        assertTrue(gradebookCollegeStudent.getStudentGrades().getScienceGradeResults().size() == 1);
+        assertTrue(gradebookCollegeStudent.getStudentGrades().getHistoryGradeResults().size() == 1);
+    }
 
     @AfterEach
     public void setupAfterTransaction() {
