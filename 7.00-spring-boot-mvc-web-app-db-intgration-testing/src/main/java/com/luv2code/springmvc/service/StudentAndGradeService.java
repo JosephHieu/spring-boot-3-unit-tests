@@ -64,6 +64,9 @@ public class StudentAndGradeService {
 
         if (checkIfStudentIsNull(id)) {
             studentDao.deleteById(id);
+            mathGradeDao.deleteByStudentId(id);
+            scienceGradesDao.deleteByStudentId(id);
+            historyGradeDao.deleteByStudentId(id);
         }
     }
 
