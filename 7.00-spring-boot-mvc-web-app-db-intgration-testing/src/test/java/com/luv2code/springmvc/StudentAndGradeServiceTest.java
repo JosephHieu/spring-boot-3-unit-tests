@@ -140,6 +140,12 @@ public class StudentAndGradeServiceTest {
 
     }
 
+    @Test
+    public void deleteGradeServiceReturnStudentIdOfZero() {
+        assertEquals(0, studentService.deleteGrade(0, "science"), "No student should have 0 id");
+        assertEquals(0, studentService.deleteGrade(1, "literature"), "No student should have a literature class");
+    }
+
 
 
     @AfterEach
