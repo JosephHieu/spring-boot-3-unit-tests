@@ -71,13 +71,10 @@ public class StudentAndGradeServiceTest {
 
     @BeforeEach
     public void setupDatabase() {
-        jdbc.execute("insert into student(firstname, lastname, email_address) " +
-                "values ('Hieu', 'DepZai', 'oidoioi@gmail.com')");
-
-        jdbc.execute("insert into math_grade(student_id, grade) values (1,100.00)");
-        jdbc.execute("insert into science_grade(student_id, grade) values (1,100.00)");
-        jdbc.execute("insert into history_grade(student_id, grade) values (1,100.00)");
-
+        jdbc.execute(sqlAddStudent);
+        jdbc.execute(sqlAddMathGrade);
+        jdbc.execute(sqlAddScienceGrade);
+        jdbc.execute(sqlAddHistoryGrade);
     }
 
     @Test
@@ -208,15 +205,9 @@ public class StudentAndGradeServiceTest {
 
     @AfterEach
     public void setupAfterTransaction() {
-        jdbc.execute("DELETE FROM student");
-
-        jdbc.execute("DELETE FROM math_grade");
-        jdbc.execute("DELETE FROM science_grade");
-        jdbc.execute("DELETE FROM history_grade");
-
-        jdbc.execute("ALTER TABLE student ALTER COLUMN ID RESTART WITH 1");
-        jdbc.execute("ALTER TABLE math_grade ALTER COLUMN ID RESTART WITH 1");
-        jdbc.execute("ALTER TABLE science_grade ALTER COLUMN ID RESTART WITH 1");
-        jdbc.execute("ALTER TABLE history_grade ALTER COLUMN ID RESTART WITH 1");
+        jdbc.execute(sqlDeleteStudent);
+        jdbc.execute(sqlDeleteMathGrade);
+        jdbc.execute(sqlDeleteScienceGrade);
+        jdbc.execute(sqlDeleteHistoryGrade);
     }
 }
