@@ -24,6 +24,8 @@ import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.transaction.annotation.Transactional;
 
 import static org.hamcrest.Matchers.hasSize;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.springframework.http.MediaType.APPLICATION_JSON;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
@@ -146,6 +148,18 @@ public class GradeBookControllerTest {
 
         CollegeStudent verifyStudent = studentDao.findByEmailAddress("hieu@gmail.com");
         Assertions.assertNotNull(verifyStudent, "Student should be valid");
+    }
+
+    @Test
+    public void deleteStudentHttpRequest() throws Exception {
+        assertTrue(studentDao.findById(1).isPresent());
+
+        mockMvc.perform(MockMvcRequestBuilders.delete("/student/{id}", 1))
+                .andExpect(status().isOk())
+                .andExpect(content().contentType(APPLICATION_JSON))
+                .andExpect(jsonPath("$", hasSize(0)));
+
+        assertFalse(studentDao.findById(1).isPresent());
     }
 
     @AfterEach
