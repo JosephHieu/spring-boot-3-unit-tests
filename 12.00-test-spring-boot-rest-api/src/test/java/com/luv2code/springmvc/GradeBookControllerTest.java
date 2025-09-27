@@ -12,6 +12,7 @@ import jakarta.persistence.PersistenceContext;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.MediaType;
 import org.mockito.Mock;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,7 +23,12 @@ import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.mock.web.MockHttpServletRequest;
 import org.springframework.test.context.TestPropertySource;
 import org.springframework.test.web.servlet.MockMvc;
+import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.transaction.annotation.Transactional;
+
+import static org.hamcrest.Matchers.hasSize;
+import static org.springframework.http.MediaType.APPLICATION_JSON;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
 @TestPropertySource("/application-test.properties")
 @AutoConfigureMockMvc
@@ -109,6 +115,22 @@ public class GradeBookControllerTest {
         jdbc.execute(sqlAddMathGrade);
         jdbc.execute(sqlAddScienceGrade);
         jdbc.execute(sqlAddHistoryGrade);
+    }
+
+    @Test
+    public void getStudentsHttpRequest() throws Exception {
+
+        student.setFirstname("Hieu");
+        student.setLastname("Nguyen");
+        student.setEmailAddress("hieu@gmail.com");
+
+        entityManager.persist(student);
+        entityManager.flush();
+
+        mockMvc.perform(MockMvcRequestBuilders.get("/"))
+                .andExpect(status().isOk())
+                .andExpect(content().contentType(APPLICATION_JSON))
+                .andExpect(jsonPath("$", hasSize(2)));
     }
 
     @AfterEach
